@@ -8,12 +8,13 @@ const sequalize  = new Sequelize (`${envConfig.db}`,{
 }) 
 
 // const sequalize = new Sequelize(envConfig.db as string,{
-//     models : [__dirname + '/models']
+//     models : [__dirname + './Model']
 // })
 try {
     sequalize.authenticate().then(()=>
     {
         console.log("connected  to sequalize")
+
 
     }).catch(err=>{
         console.log('not connected ', err)
@@ -23,5 +24,9 @@ try {
 } catch (error) {
     console.log(error);
 }
+sequalize.sync({force : false,alter:false}).then(()=>{
+    console.log("synced !!")
+})//wo this also run hai ta
+
 
 export default sequalize;  

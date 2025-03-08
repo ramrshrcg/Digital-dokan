@@ -30,11 +30,11 @@ class User extends Model {
     })
     declare password: string
 
-    // @Column({
-    //     type: DataType.ENUM('customer', 'admin'),
-    //     defaultValue: 'customer'
-    // })
-    // declare role: string
+    @Column({
+        type: DataType.ENUM('customer', 'admin'),
+        defaultValue: 'customer'
+    })
+    declare role: string
 
     // @Column({
     //     type: DataType.STRING
