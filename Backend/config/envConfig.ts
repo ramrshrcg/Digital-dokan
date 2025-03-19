@@ -3,5 +3,6 @@ config()
 
  export const envConfig = {
     port: process.env.PORT,
-    db: process.env.sequalize_url
+    db: process.env.sequalize_url,
+    secret:process.env.SECRET
 }
