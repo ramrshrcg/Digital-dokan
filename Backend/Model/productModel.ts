@@ -23,7 +23,7 @@ class Product extends Model{
 
 
     @Column({
-        type : DataType.TEXT
+        type : DataType.TEXT 
     })
     declare productDescription:string
 

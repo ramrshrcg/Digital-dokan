@@ -5,6 +5,7 @@ import generateToken from "../services/gentoken";
 import otpgenerate from "../services/genOTP";
 import sendmail from "../services/sendmail";
 import otpTime from "../services/checkotptime";
+import hash_password from "../services/hashpassword";
 
 
 
@@ -28,11 +29,11 @@ class userController {
             return res.status(400).json({ message: "Email already exists" });
         }
 
-        const hash_password = bcrypt.hashSync(password, 11)
+        const hashed_password = hash_password(password)
         const user = await User.create({
             username,
             email,
-            password: hash_password,
+            password: hashed_password,
         })
 
 
@@ -172,7 +173,7 @@ class userController {
                 message: "user not found"
             })
         }
-        user.password = bcrypt.hashSync(newPassword, 11)
+        user.password = hash_password(newPassword)
         await user.save()
         return res.status(200).json({
             message: "password reset successfully"
