@@ -6,6 +6,7 @@ import express from 'express';
 import '../database/connecttodb';
 import userRoute from '../Routes/userRoutes';
 import categoryRoute from '../Routes/categoryRoutes';
+import productRoute from '../Routes/productRoutes';
 
 
 
@@ -15,6 +16,7 @@ app.use(express.json())
 
 app.use("/api/user", userRoute)
 app.use("/api/category", categoryRoute)
+app.use("/api/product", productRoute)
 
 
 

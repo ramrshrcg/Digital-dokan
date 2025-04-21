@@ -38,4 +38,10 @@ sequalize.sync({ force: false, alter: false }).then(() => {
 })//wo this also run hai ta
 
 
+//relationship 
+Product .belongsTo(Category)
+Category.hasMany(Product)
+
+
+
 export default sequalize;  

@@ -1,24 +1,43 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { envConfig } from "../config/envConfig";
-
-
-
-// You can move this to .env
-// const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key";
+import User from "../Model/userModel";
 
 interface JwtPayload {
-  id: number;
+  userID: string;
+  role: Role;
+  iat: number;
+  exp: number;
 }
 
-export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+enum Role {
+  Admin = "admin",
+  customer = "customer"
+
+}
+
+interface IExtendedRequest extends Request {
+  user?: {
+    role: string,
+    id: string,
+    username: string,
+    email: string,
+    password: string,
+    otp: string,
+    otpGeneratedTime: string,
+
+  }
+}
+
+const authenticateToken = async (req: IExtendedRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers["authorization"];
+
 
   // Format: Bearer token
   const token = authHeader?.split(" ")[1];
 
-  console.log(token);
- 
+  // console.log("the token is", token);//kalika krisi ta pasupanxi farm
+
 
   if (!token) {
     return res.status(401).json({ message: "Access denied. No token provided." });
@@ -27,12 +46,59 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
   try {
     const decoded = jwt.verify(token, envConfig.secret as string) as JwtPayload;
 
-    // You can attach user info to the request object
-    (req as any).user = decoded;
+
+    // console.log("\n\n");
+    // console.log(decoded);
+    // console.log(decoded.userID);
+
+
+    const userData = await User.findByPk(
+      decoded.userID
+    )
+    // console.log('user data is ', userData?.dataValues);
+    if (!userData) {
+      res.status(400).json({
+        message: "User not found",
+      })
+      return
+    }
+    req.user = userData;
+
+
     next();
   } catch (err) {
     return res.status(403).json({ message: "Invalid or expired token." });
   }
 };
 
-export default authenticateToken; 
+const authorizeRoles = (...roles: Role[]) => {
+  return (req: IExtendedRequest, res: Response, next: NextFunction) => {
+
+    let role = req.user?.role
+    console.log(role);
+    if (!role) {
+      return res.status(401).json({ message: "Access denied. No role provided." });
+    }
+    // if (role === Role.Admin) {
+    //   return next()
+    // }else
+    // {
+    //   res.status(400).json({
+    //     message: "Access denied. You don't have permission to access this resource.",
+    //   })
+    // }
+    if (!roles.includes(role as Role)) {
+      return res.status(400).json({
+        message: "Access denied. You don't have permission to access this resource.",
+      })
+      return
+    }
+    next();
+
+
+
+
+  };
+};
+
+export { authenticateToken, authorizeRoles, Role }
