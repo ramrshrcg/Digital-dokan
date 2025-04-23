@@ -2,7 +2,7 @@ import Category from '../Model/categoryModel';
 import Product from '../Model/productModel';
 import User from '../Model/userModel';
 import { envConfig } from './../config/envConfig';
-import { Sequelize } from "sequelize-typescript";
+import { ForeignKey, Sequelize } from "sequelize-typescript";
 
 
 const sequalize = new Sequelize(`${envConfig.db}`, {
@@ -33,14 +33,14 @@ try {
 } catch (error) {
     console.log(error);
 }
-sequalize.sync({ force: false, alter: false }).then(() => {
+sequalize.sync({ force: false , alter: false }).then(() => {
     console.log("synced !!")
 })//wo this also run hai ta
 
 
 //relationship 
-Product .belongsTo(Category)
-Category.hasMany(Product)
+Product .belongsTo(Category, {foreignKey:"categoryId"})
+Category.hasMany(Product, {foreignKey:"categoryId"})
 
 
 

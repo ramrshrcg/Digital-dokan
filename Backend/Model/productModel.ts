@@ -1,54 +1,58 @@
-import {Table,Column,Model,DataType} from 'sequelize-typescript'
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript'
+import Category from './categoryModel'
 
 
 @Table({
-    tableName : "products", 
-    modelName : "Product", 
-    timestamps : true
+    tableName: "products",
+    modelName: "Product",
+    timestamps: true
 })
 
-class Product extends Model{
+class Product extends Model {
     @Column({
-        primaryKey : true, 
-        type : DataType.UUID, 
-        defaultValue : DataType.UUIDV4
+        primaryKey: true,
+        type: DataType.UUID,
+        defaultValue: DataType.UUIDV4
     })
-    declare id:string
+    declare id: string
 
     @Column({
-        type : DataType.STRING, 
-        allowNull : false
+        type: DataType.STRING,
+        allowNull: false
     })
-    declare productName:string
+    declare productName: string
 
 
     @Column({
-        type : DataType.TEXT 
+        type: DataType.TEXT
     })
-    declare productDescription:string
+    declare productDescription: string
 
     @Column({
-        type : DataType.FLOAT, 
-        allowNull : false
+        type: DataType.FLOAT,
+        allowNull: false
     })
-    declare productPrice:number
+    declare productPrice: number
 
     @Column({
-        type : DataType.INTEGER,
-        allowNull : false
+        type: DataType.INTEGER,
+        allowNull: false
     })
-    declare productTotalStock:number
+    declare productTotalStock: number
 
     @Column({
-        type : DataType.INTEGER, 
-        allowNull : false
+        type: DataType.INTEGER,
+        allowNull: false
     })
-    declare discount:number
+    declare discount: number
 
     @Column({
-        type : DataType.STRING
+        type: DataType.STRING
     })
-    declare productImageUrl : string
+    declare productImageUrl: string
+
+   
 }
+
 
 export default Product

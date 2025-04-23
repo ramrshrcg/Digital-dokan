@@ -1,5 +1,6 @@
 
-import {  Column, DataType, Model, Table } from "sequelize-typescript";
+import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import Product from "./productModel";
 
 @Table({
     tableName: "categories",
@@ -16,19 +17,15 @@ class Category extends Model {
     declare id: string;
 
     @Column({
-       type: DataType.STRING,
+        type: DataType.STRING,
         // type: DataType.UUID,
         // defaultValue: DataType.UUIDV4,
-        allowNull:false,
+        allowNull: false,
     })
     declare categoryName: string;
 
 
-    // @Column({
-    //     type: DataType.STRING,
-    //     alowNull: false,
-    // })
-    // declare categoryName: string;
+    
 }
 
 export default Category;
