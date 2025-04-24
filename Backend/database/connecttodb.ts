@@ -1,4 +1,7 @@
 import Category from '../Model/categoryModel';
+import OrderDetails from '../Model/orderDetails';
+import Order from '../Model/orderModel';
+import Payment from '../Model/paymentModel';
 import Product from '../Model/productModel';
 import User from '../Model/userModel';
 import { envConfig } from './../config/envConfig';
@@ -9,16 +12,15 @@ const sequalize = new Sequelize(`${envConfig.db}`, {
     models: [User,
         Product,
         Category,
+        Order,
+        OrderDetails,
+        Payment,
         
         ],//just add comma and add the no if tables
-        
-    
-
-
 })
 
 // const sequalize = new Sequelize(envConfig.db as string,{
-//     models : [__dirname + '/Model']
+//     models : [__dirname + './Model']
 // })
 try {
     sequalize.authenticate().then(() => {
@@ -39,8 +41,15 @@ sequalize.sync({ force: false , alter: false }).then(() => {
 
 
 //relationship 
+//between product and category 
 Product .belongsTo(Category, {foreignKey:"categoryId"})
 Category.hasMany(Product, {foreignKey:"categoryId"})
+
+//between product and order
+
+
+//between order and payment
+
 
 
 
