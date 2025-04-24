@@ -16,7 +16,7 @@ enum Role {
 
 }
 
-interface IExtendedRequest extends Request {
+ export interface IExtendedRequest extends Request {
   user?: {
     role: string,
     id: string,
