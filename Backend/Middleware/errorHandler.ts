@@ -7,6 +7,7 @@ const errorHandler = (fn: Function) => {
             res.status(500).json({
                 message: "internal error",
                 errorMessage: err.message,
+                error:err,
             })
             return
         })

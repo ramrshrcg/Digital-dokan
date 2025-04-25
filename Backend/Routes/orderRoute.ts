@@ -6,6 +6,8 @@ import errorHandler from "../Middleware/errorHandler";
 const route:Router= expreess.Router()
 
 route.post("/createOrder", authenticateToken, errorHandler(orderController.createOrder))
+route.post("/verifypayment", authenticateToken, errorHandler(orderController.verifyPayment))
+
 
 
 
