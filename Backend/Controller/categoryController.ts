@@ -38,13 +38,7 @@ class categoryController {
         }
 
     }
-    // static async create(req:Request, res:Response){
-    // {
-    //     return res.status(200).json({
-    //         message:"api hitted"
-    //     })
-    // }
-    // }
+    
     // Create custom category
     static async createCategory(req: Request, res: Response) {
         const { categoryName } = req.body;

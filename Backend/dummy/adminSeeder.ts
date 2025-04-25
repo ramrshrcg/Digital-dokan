@@ -1,5 +1,5 @@
-import User from "./Model/userModel"
-import hash_password from "./services/hashpassword";
+import User from "../Model/userModel"
+import hash_password from "../services/hashpassword";
 
 const adminSeeder = async () => {
 

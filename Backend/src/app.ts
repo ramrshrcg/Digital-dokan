@@ -1,5 +1,6 @@
 //package
 import express from 'express';
+import cors from "cors";
 
 
 //import files
@@ -14,6 +15,8 @@ import orderRoute from "../Routes/orderRoute"
 
 const app= express()
 app.use(express.json())
+app.use(cors())
+
 
 app.use("/api/user", userRoute)
 app.use("/api/category", categoryRoute)

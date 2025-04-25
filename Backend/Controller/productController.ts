@@ -5,6 +5,9 @@ import Category from "../Model/categoryModel";
 
 
 class ProductController {
+
+   
+    
     async createProduct(req: Request, res: Response): Promise<void> {
 
         const { productName, productDescription, productPrice, productTotalStock, discount, categoryId } = req.body
@@ -16,20 +19,6 @@ class ProductController {
             return
         }
 
-        // const cId = await Category.findOne({
-        //     where: {
-        //         categoryName: category
-        //     }
-
-
-        // })
-        // if (!cId) {
-        //     res.status(404).json({
-        //         message: "Category not found"
-        //     });
-        //     return;
-        // }
-        // const categoryId = cId.id ;
         console.log(categoryId);
 
 
