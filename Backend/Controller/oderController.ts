@@ -5,6 +5,7 @@ import OrderDetails from "../Model/orderDetails";
 import { IExtendedRequest } from '../Middleware/tokenAuth';
 import Payment from '../Model/paymentModel';
 import axios from 'axios';
+import Product from '../Model/productModel';
 
 interface Iproduct {
     productId: string,
@@ -77,7 +78,28 @@ class orderController {
             paymentData.save()
 
             // res.redirect(khaltiResponse.payment_url)
+            
+            // products.forEach(async product => {
 
+            //     const productData= await Product.findOne({
+            //         where: {
+            //             id: product.productId
+            //         }
+            //     })
+            //     const P_quantity = productData?.productTotalStock 
+            //    const  remaining = P_quantity? - quantity : P_quantity
+                
+            //     await Product.update({
+            //         productTotalStock:remaining
+            //     },
+            //      {
+    
+            //         where: {
+            //             id: productData?.id
+            //         }
+            //     })
+            // });
+           
             res.status(200).json({
                 message: "order created sucessfully",
                 khaltiResponse
@@ -131,6 +153,24 @@ class orderController {
 
     }
 
+    static async getOrder(req: IExtendedRequest, res: Response) {
+        const user = req.user;
+        const order = await Order.findAll({
+            where: {
+                userId: user?.id
+            }
+        })
+        if (order.length == 0) {
+            res.status(400).json({
+                message: "no order found"
+            })
+            return
+        }
+        res.status(200).json({
+            message: "order fetched",
+            order
+        })
+    }
 
 }
 export default orderController;

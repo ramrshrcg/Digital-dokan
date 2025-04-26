@@ -1,3 +1,4 @@
+import CartModel from '../Model/cartModel';
 import Category from '../Model/categoryModel';
 import OrderDetails from '../Model/orderDetails';
 import Order from '../Model/orderModel';
@@ -15,6 +16,7 @@ const sequalize = new Sequelize(`${envConfig.db}`, {
         Order,
         OrderDetails,
         Payment,
+        CartModel,
 
     ],//just add comma and add the no if tables
 })
@@ -61,6 +63,14 @@ Order.hasOne(OrderDetails, { foreignKey: "orderId" })
 Payment.belongsTo(Order, { foreignKey: "orderId" })
 Order.hasOne(Payment, { foreignKey: "orderId" })
 
+//cart and product
+CartModel.belongsTo(Product, { foreignKey: "productId" })
+Product.hasMany(CartModel, { foreignKey: "productId" })
 
+//cart and user
+CartModel.belongsTo(User, { foreignKey: "userId" })
+User.hasMany(CartModel, { foreignKey: "userId" })
 
-export default sequalize;  
+//cart and order
+// CartModel.belongsTo(Order, { foreignKey: "orderId" })
+// Order.hasMany(CartModel, { foreignKey: "orderId" })

@@ -7,6 +7,7 @@ const route:Router= expreess.Router()
 
 route.post("/createOrder", authenticateToken, errorHandler(orderController.createOrder))
 route.post("/verifypayment", authenticateToken, errorHandler(orderController.verifyPayment))
+route.get("/getOrder", authenticateToken, errorHandler(orderController.getOrder))
 
 
 
